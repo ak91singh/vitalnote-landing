@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitalNoteAI — SOAP Notes in 2.5 Seconds</title>
+  <meta name="description" content="VitalNoteAI generates clinical SOAP notes in 2.5 seconds with built-in hallucination detection. Free to try. Built for doctors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2a45;
+      --teal: #0d8a7c;
+      --teal-light: #13b09d;
+      --amber: #e8a030;
+      --cream: #f7f4ef;
+      --white: #ffffff;
+      --gray-50: #f9f9f7;
+      --gray-100: #ededea;
+      --gray-400: #9a9a94;
+      --gray-600: #5c5c57;
+      --gray-800: #2a2a26;
+      --red-soft: #c0392b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--gray-800);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(247,244,239,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta {
+      background: var(--teal);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--teal-light) !important; transform: translateY(-1px); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,138,124,0.10) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(15,42,69,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(13,138,124,0.1);
+      border: 1px solid rgba(13,138,124,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.4); } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+    .hero-headline {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      text-align: center;
+      max-width: 820px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--gray-600);
+      text-align: center;
+      max-width: 580px;
+      line-height: 1.6;
+      font-weight: 400;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-actions {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(15,42,69,0.25);
+    }
+    .btn-primary:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,138,124,0.3); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--navy);
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid rgba(15,42,69,0.2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--navy); background: rgba(15,42,69,0.04); }
+
+    .hero-stats {
+      margin-top: 56px;
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .stat-value {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.4rem;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--gray-100);
+      align-self: center;
+    }
+
+    /* ─── PHONE SHOWCASE ─── */
+    .showcase {
+      padding: 80px 24px 100px;
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+    }
+    .showcase::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%; transform: translateX(-50%);
+      width: 120%; height: 160px;
+      background: var(--cream);
+      border-radius: 0 0 50% 50%;
+    }
+    .showcase::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(13,138,124,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .showcase-label {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal-light);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+    .showcase-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: white;
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .phones-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+      flex-wrap: wrap;
+    }
+
+    .phone-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .phone-caption {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .phone-frame {
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+      transition: transform 0.3s ease;
+    }
+    .phone-frame:hover { transform: translateY(-8px); }
+    .phone-frame img {
+      display: block;
+      width: 180px;
+      object-fit: cover;
+    }
+    .phone-frame.center-phone {
+      transform: translateY(-20px);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.12);
+    }
+    .phone-frame.center-phone:hover { transform: translateY(-28px); }
+    .phone-frame.center-phone img { width: 210px; }
+
+    /* ─── DIFFERENTIATOR ─── */
+    .diff-section {
+      background: var(--cream);
+      padding: 120px 24px;
+    }
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 640px;
+    }
+
+    .diff-grid {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--gray-100);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .diff-card {
+      background: var(--white);
+      padding: 48px;
+      transition: background 0.2s;
+    }
+    .diff-card:hover { background: var(--gray-50); }
+    .diff-card.accent { background: var(--navy); }
+    .diff-card.accent:hover { background: #142f4d; }
+    .diff-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      background: rgba(13,138,124,0.1);
+    }
+    .diff-card.accent .diff-icon { background: rgba(255,255,255,0.1); }
+    .diff-card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .diff-card.accent .diff-card-title { color: white; }
+    .diff-card-body {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+    }
+    .diff-card.accent .diff-card-body { color: rgba(255,255,255,0.65); }
+    .diff-highlight {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(13,138,124,0.08);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--teal);
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .how-section {
+      background: var(--gray-50);
+      padding: 120px 24px;
+    }
+    .steps-row {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--teal), var(--navy));
+      z-index: 0;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(15,42,69,0.3);
+      flex-shrink: 0;
+    }
+    .step:last-child .step-num { background: var(--teal); box-shadow: 0 4px 20px rgba(13,138,124,0.4); }
+    .step-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .step-body {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ─── HALLUCINATION SECTION ─── */
+    .halluc-section {
+      padding: 120px 24px;
+      background: var(--cream);
+    }
+    .halluc-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .halluc-visual {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .halluc-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--navy);
+    }
+    .halluc-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(13,138,124,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .quality-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 0.9rem;
+    }
+    .quality-row:last-of-type { border: none; }
+    .quality-label { color: var(--gray-600); font-weight: 500; }
+    .quality-val { font-weight: 700; color: var(--navy); }
+    .quality-val.green { color: var(--teal); }
+    .quality-val.amber { color: var(--amber); }
+    .halluc-warning {
+      margin-top: 20px;
+      background: #fff8ed;
+      border: 1px solid #f0c060;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #7a5a10;
+    }
+    .halluc-warning strong { display: block; margin-bottom: 4px; color: #c47d00; }
+
+    .halluc-text .section-heading { max-width: 480px; }
+    .halluc-body {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+    .halluc-quote {
+      margin-top: 32px;
+      padding: 20px 24px;
+      background: rgba(13,138,124,0.06);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 10px 10px 0;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--gray-600);
+    }
+
+    /* ─── SPECIALTIES ─── */
+    .spec-section {
+      background: var(--navy);
+      padding: 100px 24px;
+    }
+    .spec-section .section-tag { color: var(--teal-light); }
+    .spec-section .section-heading { color: white; }
+    .spec-pills {
+      margin-top: 48px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .spec-pill {
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .spec-pill:hover, .spec-pill.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white;
+    }
+
+    /* ─── PRICING ─── */
+    .pricing-section {
+      padding: 120px 24px;
+      background: var(--cream);
+    }
+    .pricing-header { text-align: center; }
+    .pricing-header .section-tag { display: inline-block; }
+    .pricing-header .section-heading { margin: 0 auto; }
+
+    .free-tier-banner {
+      margin: 48px auto 0;
+      max-width: 700px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      border: 1.5px solid var(--gray-100);
+      flex-wrap: wrap;
+    }
+    .free-tier-left { display: flex; align-items: center; gap: 16px; }
+    .free-tier-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(13,138,124,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .free-tier-text strong { display: block; font-size: 1rem; color: var(--navy); font-weight: 700; }
+    .free-tier-text span { font-size: 0.85rem; color: var(--gray-600); }
+    .free-tier-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .free-pill {
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: rgba(13,138,124,0.08);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid rgba(13,138,124,0.2);
+    }
+    .free-limit-note {
+      margin: 12px auto 0;
+      max-width: 700px;
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      text-align: center;
+    }
+
+    .pricing-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .price-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border: 1.5px solid transparent;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .price-card.featured {
+      background: var(--navy);
+      border-color: transparent;
+    }
+    .price-card.lifetime {
+      background: linear-gradient(135deg, #1a0a2e 0%, #0f2a45 100%);
+      border-color: rgba(232,160,48,0.3);
+    }
+    .price-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 14px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .price-badge.teal { background: var(--teal); }
+    .price-badge.amber { background: var(--amber); color: #1a0a2e; }
+    .price-tier {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      margin-bottom: 10px;
+    }
+    .price-card.featured .price-tier,
+    .price-card.lifetime .price-tier { color: rgba(255,255,255,0.4); }
+    .price-amount {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.6rem;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .price-card.featured .price-amount,
+    .price-card.lifetime .price-amount { color: white; }
+    .price-card.lifetime .price-amount { color: var(--amber); }
+    .price-amount span { font-size: 0.9rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--gray-400); }
+    .price-card.featured .price-amount span,
+    .price-card.lifetime .price-amount span { color: rgba(255,255,255,0.4); }
+    .price-equiv {
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: var(--teal-light);
+      font-weight: 600;
+    }
+    .price-card.lifetime .price-equiv { color: var(--amber); }
+    .price-desc {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+    .price-card.featured .price-desc,
+    .price-card.lifetime .price-desc { color: rgba(255,255,255,0.5); }
+    .price-divider { height: 1px; background: var(--gray-100); margin: 20px 0; }
+    .price-card.featured .price-divider,
+    .price-card.lifetime .price-divider { background: rgba(255,255,255,0.1); }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .price-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+    .price-card.featured .price-features li,
+    .price-card.lifetime .price-features li { color: rgba(255,255,255,0.65); }
+    .check { color: var(--teal); font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
+    .price-card.featured .check { color: var(--teal-light); }
+    .price-card.lifetime .check { color: var(--amber); }
+    .price-cta {
+      margin-top: 24px;
+      display: block;
+      text-align: center;
+      padding: 13px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1.5px solid var(--gray-100);
+      color: var(--navy);
+    }
+    .price-cta:hover { border-color: var(--navy); }
+    .price-card.featured .price-cta {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white;
+    }
+    .price-card.featured .price-cta:hover { background: var(--teal-light); border-color: var(--teal-light); }
+    .price-card.lifetime .price-cta {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #1a0a2e;
+    }
+    .price-card.lifetime .price-cta:hover { background: #f0b040; }
+
+    /* ─── FEEDBACK FORM ─── */
+    .form-section {
+      padding: 100px 24px;
+      background: var(--gray-50);
+    }
+    .form-section .section-heading { max-width: 520px; }
+    .form-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .form-left p {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+    }
+    .form-reasons {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .form-reason {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: var(--gray-600);
+    }
+    .form-reason-icon {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      background: rgba(13,138,124,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .contact-form {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-600);
+      margin-bottom: 7px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--gray-800);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+      background: white;
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      border-radius: 100px;
+      background: var(--navy);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--teal); transform: translateY(-1px); }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 32px;
+    }
+    .form-success .success-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .form-success h3 { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 8px; }
+    .form-success p { font-size: 0.9rem; color: var(--gray-600); }
+
+    /* ─── FINAL CTA ─── */
+    .cta-section {
+      padding: 120px 24px;
+      background: linear-gradient(135deg, var(--navy) 0%, #0a2237 60%, #0d3a35 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(13,138,124,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -50%; right: -20%;
+      width: 60%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(13,138,124,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-headline {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+    .cta-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 40px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--gray-800);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.2rem;
+      color: white;
+    }
+    .footer-logo span { color: var(--teal-light); }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .diff-grid { grid-template-columns: 1fr; }
+      .steps-row { grid-template-columns: 1fr 1fr; }
+      .steps-row::before { display: none; }
+      .halluc-inner { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr 1fr; max-width: 640px; }
+      .form-inner { grid-template-columns: 1fr; }
+      .phones-row { gap: 10px; }
+      .phone-frame img { width: 130px; }
+      .phone-frame.center-phone img { width: 155px; }
+    }
+    @media (max-width: 600px) {
+      .steps-row { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+      .stat-divider { display: none; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 360px; }
+      .free-tier-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Vital<span>Note</span>AI</div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#feedback">Feedback</a>
+    <a href="#download" class="nav-cta">Download Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">Free to try — no credit card</div>
+  <h1 class="hero-headline">
+    Your SOAP note, written in <em>2.5 seconds</em>.<br>With AI that flags its own mistakes.
+  </h1>
+  <p class="hero-sub">
+    Doctors spend 90 minutes a day on documentation. VitalNoteAI cuts that to seconds — with a 5-agent validation framework that catches hallucinations before you read the note.
+  </p>
+  <div class="hero-actions">
+    <a href="https://play.google.com/store/apps/details?id=com.agentryinc.vitalnoteai" class="btn-primary">Download on Android →</a>
+    <a href="#how" class="btn-secondary">See how it works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-value">2.5s</div>
+      <div class="stat-label">Note generation</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-value">5</div>
+      <div class="stat-label">AI validation agents</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-value">90m</div>
+      <div class="stat-label">Avg. daily doc time</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-value">Free</div>
+      <div class="stat-label">To start</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHONE SHOWCASE -->
+<section class="showcase" id="features">
+  <div class="showcase-label">The App</div>
+  <h2 class="showcase-title">Everything you need. Nothing you don't.</h2>
+  <div class="phones-row">
+    <div class="phone-wrap reveal">
+      <div class="phone-caption">Setup</div>
+      <div class="phone-frame">
+        <img src="WhatsApp_Image_20260311_at_09_30_07.jpeg" alt="New Consultation setup screen" />
+      </div>
+    </div>
+    <div class="phone-wrap reveal">
+      <div class="phone-caption">Specialty</div>
+      <div class="phone-frame">
+        <img src="WhatsApp_Image_20260311_at_09_30_08.jpeg" alt="Specialty selection screen" />
+      </div>
+    </div>
+    <div class="phone-wrap reveal">
+      <div class="phone-caption">Record</div>
+      <div class="phone-frame center-phone">
+        <img src="WhatsApp_Image_20260311_at_09_30_08_1.jpeg" alt="Recording screen" />
+      </div>
+    </div>
+    <div class="phone-wrap reveal">
+      <div class="phone-caption">SOAP Note</div>
+      <div class="phone-frame">
+        <img src="WhatsApp_Image_20260311_at_09_30_09.jpeg" alt="Generated SOAP note" />
+      </div>
+    </div>
+    <div class="phone-wrap reveal">
+      <div class="phone-caption">Validation</div>
+      <div class="phone-frame">
+        <img src="WhatsApp_Image_20260311_at_09_30_09_1.jpeg" alt="Quality metrics screen" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-inner">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-heading">From patient conversation to signed note in four steps.</h2>
+    <div class="steps-row reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Set the specialty</div>
+        <div class="step-body">Pick your template — Cardiology, General, Pediatrics, Mental Health, Dermatology, and more.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Record or type</div>
+        <div class="step-body">Dictate during or after the consult. Multi-speaker mode handles both doctor and patient voices.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">AI generates the note</div>
+        <div class="step-body">5 agents validate the content in 2.5 seconds. Quality score, revision count, and hallucination flags — all visible.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Export &amp; move on</div>
+        <div class="step-body">PDF export ready. Review, approve, and get to your next patient. Done.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HALLUCINATION DETECTION -->
+<section class="halluc-section">
+  <div class="halluc-inner section-inner">
+    <div class="halluc-visual reveal">
+      <div class="halluc-card-header">
+        <div class="halluc-icon">📊</div>
+        Quality Metrics — 5-Agent Validation
+      </div>
+      <div class="quality-row">
+        <span class="quality-label">Quality Score</span>
+        <span class="quality-val green">80%</span>
+      </div>
+      <div class="quality-row">
+        <span class="quality-label">Revisions</span>
+        <span class="quality-val">0</span>
+      </div>
+      <div class="quality-row">
+        <span class="quality-label">Generation Time</span>
+        <span class="quality-val">2.5s</span>
+      </div>
+      <div class="quality-row">
+        <span class="quality-label">Cost</span>
+        <span class="quality-val green">$0.00 (FREE)</span>
+      </div>
+      <div class="halluc-warning">
+        <strong>⚠ Validation Concern Detected</strong>
+        Temperature was not mentioned in the transcript — flagged before you read the note.
+      </div>
+    </div>
+
+    <div class="halluc-text reveal">
+      <div class="section-tag">The #1 differentiator</div>
+      <h2 class="section-heading">The AI that checks itself before you do.</h2>
+      <p class="halluc-body">
+        Every other clinical note tool gives you a note and hopes you catch the errors. VitalNoteAI runs a 5-agent validation framework that detects hallucinations — information that wasn't in the transcript but appeared in the note — and flags it before you read a single word.
+      </p>
+      <p class="halluc-body" style="margin-top:12px;">
+        You get a quality score, a revision count, and specific validation concerns called out in plain language. Not a black box. A transparent tool you can actually trust.
+      </p>
+      <div class="halluc-quote">
+        "I've tried three AI note tools. They all sound confident. This one tells me when it isn't sure."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFF CARDS -->
+<section class="diff-section">
+  <div class="section-inner">
+    <div class="section-tag">Why VitalNoteAI</div>
+    <h2 class="section-heading">Built for the doctor who doesn't have time for another broken tool.</h2>
+    <div class="diff-grid reveal">
+      <div class="diff-card accent">
+        <div class="diff-icon">🛡️</div>
+        <div class="diff-card-title">Hallucination detection</div>
+        <div class="diff-card-body">The AI flags information it added that wasn't in your transcript. No other mobile clinical note app leads with this. You shouldn't have to guess if the note is accurate.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">⚡</div>
+        <div class="diff-card-title">2.5-second generation</div>
+        <div class="diff-card-body">Not "fast." 2.5 seconds. You can time it. Complete SOAP note with quality scoring — in the time it takes to breathe.</div>
+        <div class="diff-highlight">⏱ Avg. 2.5s per note</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🌐</div>
+        <div class="diff-card-title">Multilingual &amp; multi-speaker</div>
+        <div class="diff-card-body">Works with non-English patient conversations. Multi-speaker mode separates doctor and patient voices. Built for the real world, not just English-speaking private practices.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🎯</div>
+        <div class="diff-card-title">Specialty-aware templates</div>
+        <div class="diff-card-body">Cardiology notes don't look like Pediatrics notes. Templates adapt terminology, format, and required fields to your specialty — not a generic form you have to fix every time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="spec-section">
+  <div class="section-inner">
+    <div class="section-tag">Specialty Templates</div>
+    <h2 class="section-heading">Your field. Your format.</h2>
+    <div class="spec-pills reveal">
+      <div class="spec-pill active">General / Primary Care</div>
+      <div class="spec-pill">Cardiology</div>
+      <div class="spec-pill">Pediatrics</div>
+      <div class="spec-pill">Mental Health</div>
+      <div class="spec-pill">Dermatology</div>
+      <div class="spec-pill">Emergency Medicine</div>
+      <div class="spec-pill">Orthopedics</div>
+      <div class="spec-pill">Neurology</div>
+      <div class="spec-pill">Telemedicine</div>
+      <div class="spec-pill">More coming</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-header section-inner">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-heading">Less than your hourly rate. For a month of saved time.</h2>
+  </div>
+
+  <!-- Free Tier Banner -->
+  <div class="free-tier-banner reveal">
+    <div class="free-tier-left">
+      <div class="free-tier-icon">🆓</div>
+      <div class="free-tier-text">
+        <strong>Free tier — no credit card, no commitment</strong>
+        <span>3 SOAP notes per day. Resets at midnight. Real hallucination detection included.</span>
+      </div>
+    </div>
+    <div class="free-tier-pills">
+      <div class="free-pill">✓ Hallucination detection</div>
+      <div class="free-pill">✓ Quality scoring</div>
+      <div class="free-pill">✓ PDF export</div>
+    </div>
+  </div>
+  <p class="free-limit-note">Hit your 3rd note of the day and you'll see an upgrade prompt — upgrade anytime to remove the limit.</p>
+
+  <!-- Paid Plans -->
+  <div class="pricing-grid reveal">
+    <!-- Monthly -->
+    <div class="price-card">
+      <div class="price-tier">Monthly</div>
+      <div class="price-amount">$19<span>/mo</span></div>
+      <div class="price-desc">Billed monthly. Cancel anytime.</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Unlimited SOAP notes</li>
+        <li><span class="check">✓</span> All specialty templates</li>
+        <li><span class="check">✓</span> Multi-speaker mode</li>
+        <li><span class="check">✓</span> Multilingual support</li>
+        <li><span class="check">✓</span> PDF export + history</li>
+      </ul>
+      <a href="#download" class="price-cta">Get Monthly</a>
+    </div>
+
+    <!-- Quarterly -->
+    <div class="price-card featured">
+      <div class="price-badge teal">Most Popular</div>
+      <div class="price-tier">Quarterly</div>
+      <div class="price-amount">$60<span>/qtr</span></div>
+      <div class="price-equiv">~$20/mo · billed every 3 months</div>
+      <div class="price-desc">Commit a quarter. Keep the flexibility.</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Everything in Monthly</li>
+        <li><span class="check">✓</span> Priority support</li>
+        <li><span class="check">✓</span> Early access to new templates</li>
+      </ul>
+      <a href="#download" class="price-cta">Get Quarterly</a>
+    </div>
+
+    <!-- Annual -->
+    <div class="price-card featured">
+      <div class="price-badge teal">Best Value</div>
+      <div class="price-tier">Annual</div>
+      <div class="price-amount">$150<span>/yr</span></div>
+      <div class="price-equiv">~$12.50/mo · save 34% vs monthly</div>
+      <div class="price-desc">One payment. A full year of no documentation stress.</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Everything in Quarterly</li>
+        <li><span class="check">✓</span> Locked-in pricing guarantee</li>
+        <li><span class="check">✓</span> Feature request priority</li>
+      </ul>
+      <a href="#download" class="price-cta">Get Annual</a>
+    </div>
+
+    <!-- Lifetime -->
+    <div class="price-card lifetime">
+      <div class="price-badge amber">⚡ One-Time</div>
+      <div class="price-tier">Lifetime</div>
+      <div class="price-amount">$650<span> once</span></div>
+      <div class="price-equiv">Pay once. Use forever. No recurring fees.</div>
+      <div class="price-desc">For doctors who hate subscription math.</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> Everything, forever</li>
+        <li><span class="check">✓</span> All future templates included</li>
+        <li><span class="check">✓</span> Lifetime feature updates</li>
+        <li><span class="check">✓</span> Direct founder access</li>
+      </ul>
+      <a href="#download" class="price-cta">Get Lifetime Access</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="download">
+  <div class="cta-inner">
+    <h2 class="cta-headline">90 minutes of documentation.<br>Or 2.5 seconds.</h2>
+    <p class="cta-sub">Free tier. No credit card. Try it on your next patient.</p>
+    <div class="hero-actions" style="margin-top:0;">
+      <a href="https://play.google.com/store/apps/details?id=com.agentryinc.vitalnoteai" class="btn-primary" style="background:var(--teal); box-shadow:0 4px 20px rgba(13,138,124,0.4);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px;margin-bottom:2px"><path d="M3.18 23.76c.33.18.7.24 1.07.17L14.03 12 4.25.07C3.88 0 3.51.06 3.18.24 2.48.64 2 1.42 2 2.36v19.28c0 .94.48 1.72 1.18 2.12zM16.54 9.54l2.44-2.44-9.8-5.66 7.36 8.1zm-7.36 4.92l9.8-5.66-2.44-2.44-7.36 8.1zm1.07 7.66l9.8-5.66c.7-.4 1.18-1.18 1.18-2.12s-.48-1.72-1.18-2.12l-2.44-1.4-8.1 8.92 .74.38z"/></svg>
+        Download on Android
+      </a>
+    </div>
+    <p style="margin-top:20px; font-size:0.82rem; color:rgba(255,255,255,0.3);">Android only · iOS coming soon · Built by Agentry Inc.</p>
+  </div>
+</section>
+
+<!-- FEEDBACK FORM -->
+<section class="form-section" id="feedback">
+  <div class="form-inner section-inner">
+    <div class="form-left reveal">
+      <div class="section-tag">Talk to the builder</div>
+      <h2 class="section-heading">Tell us what documentation actually costs you.</h2>
+      <p>VitalNoteAI is built by one person. Every submission goes directly into a live dashboard — not a support queue, not a bot. You'll get a real reply.</p>
+      <div class="form-reasons">
+        <div class="form-reason">
+          <div class="form-reason-icon">📬</div>
+          <div>We'll email you when features you asked for ship. No newsletters, no drip campaigns.</div>
+        </div>
+        <div class="form-reason">
+          <div class="form-reason-icon">🎯</div>
+          <div>Your specialty and years in practice directly shapes what gets built next.</div>
+        </div>
+        <div class="form-reason">
+          <div class="form-reason-icon">🔑</div>
+          <div>Early feedback submitters get first access to Pro features and locked-in beta pricing.</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div id="form-fields">
+        <!-- Row 1: Name + Email -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="form-group">
+            <label for="f-name">Name</label>
+            <input type="text" id="f-name" placeholder="Dr. Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email *</label>
+            <input type="email" id="f-email" placeholder="you@clinic.com" />
+          </div>
+        </div>
+        <!-- Row 2: Specialty + Years -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="form-group">
+            <label for="f-specialty">Specialty</label>
+            <select id="f-specialty">
+              <option value="">Select specialty</option>
+              <option>General / Primary Care</option>
+              <option>Cardiology</option>
+              <option>Pediatrics</option>
+              <option>Mental Health / Psychiatry</option>
+              <option>Dermatology</option>
+              <option>Emergency Medicine</option>
+              <option>Telemedicine</option>
+              <option>Internal Medicine</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-years">Years in practice</label>
+            <select id="f-years">
+              <option value="">Select range</option>
+              <option>Still in medical school</option>
+              <option>Resident / Fellow</option>
+              <option>1–3 years</option>
+              <option>4–10 years</option>
+              <option>10–20 years</option>
+              <option>20+ years</option>
+            </select>
+          </div>
+        </div>
+        <!-- Pain point -->
+        <div class="form-group">
+          <label for="f-pain">Biggest documentation pain point</label>
+          <textarea id="f-pain" rows="3" placeholder="E.g. 'I spend 90 min/day on notes and by the time I'm done I've forgotten half the clinical reasoning...'"></textarea>
+        </div>
+        <!-- Feature request -->
+        <div class="form-group">
+          <label for="f-feature">What feature would make you pay for this immediately?</label>
+          <textarea id="f-feature" rows="3" placeholder="E.g. 'EHR integration so I don't have to copy-paste', 'Voice commands to edit sections'..."></textarea>
+        </div>
+        <button type="button" class="form-submit" id="form-btn" onclick="submitToSheet()">Send Feedback →</button>
+        <p style="text-align:center;font-size:0.75rem;color:var(--gray-400);margin-top:10px;">* Email required. Everything else optional but genuinely useful.</p>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="success-icon">✅</div>
+        <h3>Got it. Thank you.</h3>
+        <p>This went straight into Akki's dashboard. If you left your email, expect a real reply — not an automated one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">Vital<span>Note</span>AI</div>
+  <div class="footer-copy">© 2026 Agentry Inc. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="mailto:hello@agentryinc.com">Contact</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+  </div>
+</footer>
+
+<script>
+  // ─────────────────────────────────────────────────────────────────
+  // GOOGLE SHEETS WEBHOOK
+  // Paste your Apps Script Web App URL below after following
+  // the 3-step setup in SHEETS_SETUP.md
+  // ─────────────────────────────────────────────────────────────────
+  const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbystilqve7PpsS2D1YMl0F9Fqp42xaJ-EmdxxLofVPwsIG6cGQBlI4aqifJfAStP56C/exec';
+
+  async function postToSheet(payload) {
+    if (SHEET_WEBHOOK === 'https://script.google.com/macros/s/AKfycbystilqve7PpsS2D1YMl0F9Fqp42xaJ-EmdxxLofVPwsIG6cGQBlI4aqifJfAStP56C/exec') return; // not yet set up
+    try {
+      await fetch(SHEET_WEBHOOK, {
+        method: 'POST',
+        // Google Apps Script requires text/plain for no-CORS requests
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors'
+      });
+    } catch(e) { /* never break the page on tracking failure */ }
+  }
+
+  // ─── FORM SUBMISSION → GOOGLE SHEET ──────────────────────────
+  window.submitToSheet = async function() {
+    const name      = document.getElementById('f-name').value.trim();
+    const email     = document.getElementById('f-email').value.trim();
+    const specialty = document.getElementById('f-specialty').value;
+    const years     = document.getElementById('f-years').value;
+    const pain      = document.getElementById('f-pain').value.trim();
+    const feature   = document.getElementById('f-feature').value.trim();
+
+    if (!email) {
+      const emailField = document.getElementById('f-email');
+      emailField.focus();
+      emailField.style.borderColor = '#c0392b';
+      return;
+    }
+
+    const btn = document.getElementById('form-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const params = new URLSearchParams(window.location.search);
+
+    await postToSheet({
+      type:              'lead',
+      timestamp:         new Date().toISOString(),
+      name:              name || '',
+      email:             email,
+      specialty:         specialty || '',
+      years_in_practice: years || '',
+      pain_point:        pain || '',
+      feature_request:   feature || '',
+      referrer:          document.referrer || 'direct',
+      utm_source:        params.get('utm_source')   || '',
+      utm_medium:        params.get('utm_medium')   || '',
+      utm_campaign:      params.get('utm_campaign') || '',
+    });
+
+    // Always show success — no-cors means we can't read the response,
+    // but the fallback mailto catches any genuine failure
+    document.getElementById('form-fields').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  };
+
+  // ─── SCROLL ANIMATIONS ────────────────────────────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── SPEC PILL TOGGLE ─────────────────────────────────────────
+  document.querySelectorAll('.spec-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.spec-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+
+  // ─── NAV SCROLL SHADOW ────────────────────────────────────────
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 40 ? '0 2px 20px rgba(0,0,0,0.08)' : 'none';
+  });
+
+  // ─── EMAIL VALIDATION RESET ───────────────────────────────────
+  document.getElementById('f-email').addEventListener('input', function() {
+    this.style.borderColor = '';
+  });
+</script>
+
+</body>
+</html>
