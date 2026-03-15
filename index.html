@@ -1363,10 +1363,10 @@
   // Paste your Apps Script Web App URL below after following
   // the 3-step setup in SHEETS_SETUP.md
   // ─────────────────────────────────────────────────────────────────
-  const SHEET_WEBHOOK = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+  const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbydsX5kxDoOzdd3j_VHs1XUo0czPTxhfKaUjviOqY69gVew0sS3dLESiN_GLJAKy5sC/exec';
 
   async function postToSheet(payload) {
-    if (SHEET_WEBHOOK === 'YOUR_APPS_SCRIPT_WEB_APP_URL') return; // not yet set up
+    if (SHEET_WEBHOOK === 'https://script.google.com/macros/s/AKfycbydsX5kxDoOzdd3j_VHs1XUo0czPTxhfKaUjviOqY69gVew0sS3dLESiN_GLJAKy5sC/exec') return; // not yet set up
     try {
       await fetch(SHEET_WEBHOOK, {
         method: 'POST',
