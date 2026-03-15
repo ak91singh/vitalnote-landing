@@ -1359,21 +1359,17 @@
 
 <script>
   // ─────────────────────────────────────────────────────────────────
-  // GOOGLE SHEETS WEBHOOK
-  // Paste your Apps Script Web App URL below after following
-  // the 3-step setup in SHEETS_SETUP.md
+  // FORMSPREE — paste your Formspree endpoint below
+  // Get it free at formspree.io (replace YOUR_FORM_ID)
   // ─────────────────────────────────────────────────────────────────
-  const SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbyZWcW37473ukB6sYcNWvj2CbdeRUyVUccCaVBueo3UII1t7_nG_VSqc-yYU7guf-Gd/exec';
+  const FORMSPREE_URL = 'https://formspree.io/f/xjgaewwj';
 
   async function postToSheet(payload) {
-    if (SHEET_WEBHOOK === 'https://script.google.com/macros/s/AKfycbyZWcW37473ukB6sYcNWvj2CbdeRUyVUccCaVBueo3UII1t7_nG_VSqc-yYU7guf-Gd/exec') return; // not yet set up
     try {
-      await fetch(SHEET_WEBHOOK, {
+      await fetch(FORMSPREE_URL, {
         method: 'POST',
-        // Google Apps Script requires text/plain for no-CORS requests
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(payload),
-        mode: 'no-cors'
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
       });
     } catch(e) { /* never break the page on tracking failure */ }
   }
