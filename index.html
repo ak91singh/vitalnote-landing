@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VitalNoteAI — SOAP Notes in 2.5 Seconds</title>
-  <meta name="description" content="VitalNoteAI generates clinical SOAP notes in 2.5 seconds with built-in hallucination detection. Free to try. Built for doctors." />
+  <title>VitalNoteAI — SOAP Notes in 5 Seconds</title>
+  <meta name="description" content="VitalNoteAI generates clinical SOAP notes in 5 seconds with built-in hallucination detection. Free to try. Built for doctors." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -603,7 +603,7 @@
     .pricing-grid {
       margin-top: 40px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
       max-width: 1100px;
       margin-left: auto;
@@ -625,10 +625,6 @@
       background: var(--navy);
       border-color: transparent;
     }
-    .price-card.lifetime {
-      background: linear-gradient(135deg, #1a0a2e 0%, #0f2a45 100%);
-      border-color: rgba(232,160,48,0.3);
-    }
     .price-badge {
       position: absolute;
       top: -12px;
@@ -644,7 +640,6 @@
       white-space: nowrap;
     }
     .price-badge.teal { background: var(--teal); }
-    .price-badge.amber { background: var(--amber); color: #1a0a2e; }
     .price-tier {
       font-size: 0.72rem;
       font-weight: 700;
@@ -653,38 +648,31 @@
       color: var(--gray-400);
       margin-bottom: 10px;
     }
-    .price-card.featured .price-tier,
-    .price-card.lifetime .price-tier { color: rgba(255,255,255,0.4); }
+    .price-card.featured .price-tier { color: rgba(255,255,255,0.4); }
     .price-amount {
       font-family: 'Instrument Serif', serif;
       font-size: 2.6rem;
       color: var(--navy);
       line-height: 1;
     }
-    .price-card.featured .price-amount,
-    .price-card.lifetime .price-amount { color: white; }
-    .price-card.lifetime .price-amount { color: var(--amber); }
+    .price-card.featured .price-amount { color: white; }
     .price-amount span { font-size: 0.9rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--gray-400); }
-    .price-card.featured .price-amount span,
-    .price-card.lifetime .price-amount span { color: rgba(255,255,255,0.4); }
+    .price-card.featured .price-amount span { color: rgba(255,255,255,0.4); }
     .price-equiv {
       margin-top: 4px;
       font-size: 0.78rem;
       color: var(--teal-light);
       font-weight: 600;
     }
-    .price-card.lifetime .price-equiv { color: var(--amber); }
     .price-desc {
       margin-top: 10px;
       font-size: 0.85rem;
       color: var(--gray-600);
       line-height: 1.5;
     }
-    .price-card.featured .price-desc,
-    .price-card.lifetime .price-desc { color: rgba(255,255,255,0.5); }
+    .price-card.featured .price-desc { color: rgba(255,255,255,0.5); }
     .price-divider { height: 1px; background: var(--gray-100); margin: 20px 0; }
-    .price-card.featured .price-divider,
-    .price-card.lifetime .price-divider { background: rgba(255,255,255,0.1); }
+    .price-card.featured .price-divider { background: rgba(255,255,255,0.1); }
     .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .price-features li {
       display: flex;
@@ -693,11 +681,9 @@
       font-size: 0.85rem;
       color: var(--gray-600);
     }
-    .price-card.featured .price-features li,
-    .price-card.lifetime .price-features li { color: rgba(255,255,255,0.65); }
+    .price-card.featured .price-features li { color: rgba(255,255,255,0.65); }
     .check { color: var(--teal); font-size: 0.9rem; font-weight: 700; flex-shrink: 0; }
     .price-card.featured .check { color: var(--teal-light); }
-    .price-card.lifetime .check { color: var(--amber); }
     .price-cta {
       margin-top: 24px;
       display: block;
@@ -718,12 +704,6 @@
       color: white;
     }
     .price-card.featured .price-cta:hover { background: var(--teal-light); border-color: var(--teal-light); }
-    .price-card.lifetime .price-cta {
-      background: var(--amber);
-      border-color: var(--amber);
-      color: #1a0a2e;
-    }
-    .price-card.lifetime .price-cta:hover { background: #f0b040; }
 
     /* ─── FEEDBACK FORM ─── */
     .form-section {
@@ -902,6 +882,158 @@
     }
     .footer-links a:hover { color: rgba(255,255,255,0.7); }
 
+    /* ─── SUBSCRIBE SECTION ─── */
+    .subscribe-section {
+      padding: 120px 24px;
+      background: var(--cream);
+    }
+    .subscribe-section .pricing-header { text-align: center; margin-bottom: 64px; }
+    .sub-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .sub-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 40px 36px;
+      border: 1.5px solid var(--gray-100);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .sub-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.10); }
+    .sub-card.featured {
+      background: var(--navy);
+      border-color: transparent;
+    }
+    .sub-card-tier {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray-400);
+      margin-bottom: 10px;
+    }
+    .sub-card.featured .sub-card-tier { color: rgba(255,255,255,0.4); }
+    .sub-card-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.8rem;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .sub-card.featured .sub-card-price { color: white; }
+    .sub-card-price span { font-size: 0.9rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--gray-400); }
+    .sub-card.featured .sub-card-price span { color: rgba(255,255,255,0.4); }
+    .sub-card-desc {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .sub-card.featured .sub-card-desc { color: rgba(255,255,255,0.55); }
+    .sub-divider { height: 1px; background: var(--gray-100); margin: 16px 0; }
+    .sub-card.featured .sub-divider { background: rgba(255,255,255,0.1); }
+    .sub-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+    .sub-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+    .sub-card.featured .sub-features li { color: rgba(255,255,255,0.65); }
+    .sub-card.featured .check { color: var(--teal-light); }
+    .sub-cta {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1.5px solid var(--gray-100);
+      color: var(--navy);
+    }
+    .sub-cta:hover { border-color: var(--navy); }
+    .sub-card.featured .sub-cta {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white;
+    }
+    .sub-card.featured .sub-cta:hover { background: var(--teal-light); border-color: var(--teal-light); }
+    .sub-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+    @media (max-width: 600px) {
+      .sub-grid { grid-template-columns: 1fr; max-width: 360px; }
+    }
+
+    /* ─── LEGAL SECTIONS ─── */
+    .legal-section {
+      padding: 100px 24px;
+      background: var(--gray-50);
+    }
+    .legal-section:nth-of-type(even) { background: var(--cream); }
+    .legal-content {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .legal-content .section-tag { margin-bottom: 8px; }
+    .legal-content .section-heading { margin-bottom: 36px; }
+    .legal-content h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+      margin: 32px 0 10px;
+    }
+    .legal-content h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 20px 0 6px;
+    }
+    .legal-content p {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .legal-content ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .legal-content ul li {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+    .legal-effective {
+      display: inline-block;
+      margin-bottom: 32px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
     /* ─── SCROLL ANIMATIONS ─── */
     .reveal {
       opacity: 0;
@@ -935,6 +1067,42 @@
       .pricing-grid { grid-template-columns: 1fr; max-width: 360px; }
       .free-tier-banner { flex-direction: column; align-items: flex-start; }
     }
+
+    /* ─── LIGHTBOX ─── */
+    .phone-frame img { cursor: zoom-in; transition: transform 0.2s; }
+    .phone-frame img:hover { transform: scale(1.03); }
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-overlay img {
+      max-width: min(380px, 88vw);
+      max-height: 88vh;
+      border-radius: 24px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 28px;
+      font-size: 2rem;
+      color: rgba(255,255,255,0.85);
+      cursor: pointer;
+      line-height: 1;
+      background: none;
+      border: none;
+      padding: 8px;
+    }
+    .lightbox-close:hover { color: white; }
   </style>
 </head>
 <body>
@@ -947,6 +1115,7 @@
     <a href="#features">Features</a>
     <a href="#pricing">Pricing</a>
     <a href="#feedback">Feedback</a>
+    <a href="#subscribe">Subscribe</a>
     <a href="#download" class="nav-cta">Download Free</a>
   </div>
 </nav>
@@ -956,13 +1125,13 @@
   <div class="hero-bg"></div>
   <div class="hero-badge">Free to try — no credit card</div>
   <h1 class="hero-headline">
-    Your SOAP note, written in <em>2.5 seconds</em>.<br>With AI that flags its own mistakes.
+    Your SOAP note, written in <em>5 seconds</em>.<br>With AI that flags its own mistakes.
   </h1>
   <p class="hero-sub">
-    Doctors spend 90 minutes a day on documentation. VitalNoteAI cuts that to seconds — with a 5-agent validation framework that catches hallucinations before you read the note.
+    Doctors spend 90 minutes a day on documentation. VitalNoteAI cuts that to seconds — with a multi-agent validation framework that catches hallucinations before you read the note.
   </p>
   <div class="hero-actions">
-    <a href="https://play.google.com/store/apps/details?id=com.agentryinc.vitalnoteai" class="btn-primary">Download on Android →</a>
+    <a href="#feedback" class="btn-primary" onclick="event.preventDefault(); document.getElementById('feedback').scrollIntoView({behavior:'smooth'});">🔔 Join Waitlist →</a>
     <a href="#how" class="btn-secondary">See how it works</a>
   </div>
   <div class="hero-stats">
@@ -1045,7 +1214,7 @@
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-title">AI generates the note</div>
-        <div class="step-body">5 agents validate the content in 2.5 seconds. Quality score, revision count, and hallucination flags — all visible.</div>
+        <div class="step-body">Multiple AI agents validate the content in 5 seconds. Quality score, revision count, and hallucination flags — all visible.</div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
@@ -1074,7 +1243,7 @@
       </div>
       <div class="quality-row">
         <span class="quality-label">Generation Time</span>
-        <span class="quality-val">2.5s</span>
+        <span class="quality-val">5s</span>
       </div>
       <div class="quality-row">
         <span class="quality-label">Cost</span>
@@ -1090,7 +1259,7 @@
       <div class="section-tag">The #1 differentiator</div>
       <h2 class="section-heading">The AI that checks itself before you do.</h2>
       <p class="halluc-body">
-        Every other clinical note tool gives you a note and hopes you catch the errors. VitalNoteAI runs a 5-agent validation framework that detects hallucinations — information that wasn't in the transcript but appeared in the note — and flags it before you read a single word.
+        Every other clinical note tool gives you a note and hopes you catch the errors. VitalNoteAI runs a multi-agent validation framework that detects hallucinations — information that wasn't in the transcript but appeared in the note — and flags it before you read a single word.
       </p>
       <p class="halluc-body" style="margin-top:12px;">
         You get a quality score, a revision count, and specific validation concerns called out in plain language. Not a black box. A transparent tool you can actually trust.
@@ -1192,15 +1361,15 @@
         <li><span class="check">✓</span> Multilingual support</li>
         <li><span class="check">✓</span> PDF export + history</li>
       </ul>
-      <a href="#download" class="price-cta">Get Monthly</a>
+      <a href="#feedback" class="price-cta">Get Monthly</a>
     </div>
 
     <!-- Quarterly -->
     <div class="price-card featured">
       <div class="price-badge teal">Most Popular</div>
       <div class="price-tier">Quarterly</div>
-      <div class="price-amount">$60<span>/qtr</span></div>
-      <div class="price-equiv">~$20/mo · billed every 3 months</div>
+      <div class="price-amount">$50<span>/qtr</span></div>
+      <div class="price-equiv">~$16.67/mo · billed every 3 months</div>
       <div class="price-desc">Commit a quarter. Keep the flexibility.</div>
       <div class="price-divider"></div>
       <ul class="price-features">
@@ -1208,7 +1377,7 @@
         <li><span class="check">✓</span> Priority support</li>
         <li><span class="check">✓</span> Early access to new templates</li>
       </ul>
-      <a href="#download" class="price-cta">Get Quarterly</a>
+      <a href="#feedback" class="price-cta">Get Quarterly</a>
     </div>
 
     <!-- Annual -->
@@ -1224,38 +1393,19 @@
         <li><span class="check">✓</span> Locked-in pricing guarantee</li>
         <li><span class="check">✓</span> Feature request priority</li>
       </ul>
-      <a href="#download" class="price-cta">Get Annual</a>
+      <a href="#feedback" class="price-cta">Get Annual</a>
     </div>
 
-    <!-- Lifetime -->
-    <div class="price-card lifetime">
-      <div class="price-badge amber">⚡ One-Time</div>
-      <div class="price-tier">Lifetime</div>
-      <div class="price-amount">$650<span> once</span></div>
-      <div class="price-equiv">Pay once. Use forever. No recurring fees.</div>
-      <div class="price-desc">For doctors who hate subscription math.</div>
-      <div class="price-divider"></div>
-      <ul class="price-features">
-        <li><span class="check">✓</span> Everything, forever</li>
-        <li><span class="check">✓</span> All future templates included</li>
-        <li><span class="check">✓</span> Lifetime feature updates</li>
-        <li><span class="check">✓</span> Direct founder access</li>
-      </ul>
-      <a href="#download" class="price-cta">Get Lifetime Access</a>
-    </div>
   </div>
 </section>
 
 <!-- FINAL CTA -->
 <section class="cta-section" id="download">
   <div class="cta-inner">
-    <h2 class="cta-headline">90 minutes of documentation.<br>Or 2.5 seconds.</h2>
+    <h2 class="cta-headline">90 minutes of documentation.<br>Or 5 seconds.</h2>
     <p class="cta-sub">Free tier. No credit card. Try it on your next patient.</p>
     <div class="hero-actions" style="margin-top:0;">
-      <a href="https://play.google.com/store/apps/details?id=com.agentryinc.vitalnoteai" class="btn-primary" style="background:var(--teal); box-shadow:0 4px 20px rgba(13,138,124,0.4);">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px;margin-bottom:2px"><path d="M3.18 23.76c.33.18.7.24 1.07.17L14.03 12 4.25.07C3.88 0 3.51.06 3.18.24 2.48.64 2 1.42 2 2.36v19.28c0 .94.48 1.72 1.18 2.12zM16.54 9.54l2.44-2.44-9.8-5.66 7.36 8.1zm-7.36 4.92l9.8-5.66-2.44-2.44-7.36 8.1zm1.07 7.66l9.8-5.66c.7-.4 1.18-1.18 1.18-2.12s-.48-1.72-1.18-2.12l-2.44-1.4-8.1 8.92 .74.38z"/></svg>
-        Download on Android
-      </a>
+      <a href="#feedback" class="btn-primary" style="background:var(--teal); box-shadow:0 4px 20px rgba(13,138,124,0.4);" onclick="event.preventDefault(); document.getElementById('feedback').scrollIntoView({behavior:'smooth'});">🔔 Join the Waitlist</a>
     </div>
     <p style="margin-top:20px; font-size:0.82rem; color:rgba(255,255,255,0.3);">Android only · iOS coming soon · Built by Agentry Inc.</p>
   </div>
@@ -1285,6 +1435,9 @@
     </div>
     <div class="contact-form reveal">
       <div id="form-fields">
+        <!-- Honeypot — invisible to humans, bots fill it automatically -->
+        <input type="text" id="f-website" name="website" autocomplete="off"
+          style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" tabindex="-1" aria-hidden="true">
         <!-- Row 1: Name + Email -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           <div class="form-group">
@@ -1347,13 +1500,165 @@
     </div>
   </div>
 </section>
+<!-- SUBSCRIBE -->
+<section class="subscribe-section" id="subscribe">
+  <div class="pricing-header reveal">
+    <div class="section-tag">Subscribe</div>
+    <h2 class="section-heading" style="margin:0 auto;">One plan. Unlimited notes.</h2>
+    <p style="margin-top:16px;font-size:1rem;color:var(--gray-600);max-width:480px;margin-left:auto;margin-right:auto;">Start free, upgrade when you're ready. No contracts, cancel anytime.</p>
+  </div>
+  <div class="sub-grid reveal">
+
+    <!-- Free card -->
+    <div class="sub-card">
+      <div class="sub-card-tier">Free</div>
+      <div class="sub-card-price">$0<span>/mo</span></div>
+      <div class="sub-card-desc">Try VitalNoteAI with no credit card required.</div>
+      <div class="sub-divider"></div>
+      <ul class="sub-features">
+        <li><span class="check">✓</span> 10 SOAP notes per month</li>
+        <li><span class="check">✓</span> All specialties</li>
+        <li><span class="check">✓</span> PDF export</li>
+        <li><span class="check">✓</span> Multi-agent validation</li>
+        <li><span class="check">✓</span> Multi-language transcription</li>
+      </ul>
+      <a href="#download" class="sub-cta">Get Started Free</a>
+    </div>
+
+    <!-- Pro card -->
+    <div class="sub-card featured">
+      <div class="sub-card-tier">Pro</div>
+      <div class="sub-card-price">$19<span>/mo</span></div>
+      <div class="sub-card-desc">For doctors who see more than 10 patients a day.</div>
+      <div class="sub-divider"></div>
+      <ul class="sub-features">
+        <li><span class="check">✓</span> Unlimited SOAP notes</li>
+        <li><span class="check">✓</span> All specialties &amp; templates</li>
+        <li><span class="check">✓</span> PDF export</li>
+        <li><span class="check">✓</span> Multi-speaker detection</li>
+        <li><span class="check">✓</span> Priority support</li>
+      </ul>
+      <a href="#feedback" class="sub-cta">Get Started →</a>
+    </div>
+
+  </div>
+  <p class="sub-note reveal">Payments are processed securely via our website. Questions? <a href="mailto:support@vitalnote.ai" style="color:var(--teal);text-decoration:none;">support@vitalnote.ai</a></p>
+</section>
+
+<!-- PRIVACY POLICY -->
+<section class="legal-section" id="privacy-policy">
+  <div class="legal-content reveal">
+    <div class="section-tag">Legal</div>
+    <h1 class="section-heading">Privacy Policy</h1>
+    <span class="legal-effective">Effective Date: March 21, 2026</span>
+
+    <p>Agentry Inc. ("we", "us", or "our") operates the VitalNoteAI mobile application (the "App"). This Privacy Policy explains how we collect, use, and protect information when you use VitalNoteAI.</p>
+
+    <h2>1. Information We Collect</h2>
+    <h3>Account Information</h3>
+    <p>When you create an account we collect your email address and, optionally, a display name. This information is stored in Firebase Authentication.</p>
+    <h3>Audio Recordings</h3>
+    <p>When you record a consultation, audio is captured on your device and transmitted securely over HTTPS to our transcription provider (Groq) solely to generate a text transcript. Audio is not stored on our servers after transcription is complete. If you enable "Auto-Delete Audio" in settings, the local audio file is also deleted immediately after analysis.</p>
+    <h3>SOAP Note Text</h3>
+    <p>Generated SOAP notes are stored locally on your device. They are not uploaded to Agentry servers unless you explicitly share them (e.g., PDF export via the system share sheet).</p>
+    <h3>Usage Metrics</h3>
+    <p>We store anonymised session counts and recording durations in your device's secure storage to power the Dashboard stats (sessions, time saved). This data never leaves your device.</p>
+    <h3>Subscription Status</h3>
+    <p>Your plan tier and subscription expiry are stored in Firebase Firestore, linked to your user ID, to enforce usage limits and grant Pro access.</p>
+
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To authenticate you and maintain your account.</li>
+      <li>To transcribe audio and generate SOAP notes on your behalf.</li>
+      <li>To enforce free-tier daily limits and grant paid-plan access.</li>
+      <li>To respond to support requests sent to support@vitalnote.ai.</li>
+    </ul>
+    <p>We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+
+    <h2>3. Third-Party Services</h2>
+    <ul>
+      <li><strong>Firebase (Google)</strong> — Authentication and Firestore database. Governed by Google's Privacy Policy.</li>
+      <li><strong>Groq</strong> — Audio transcription via Whisper. Audio is sent over HTTPS and is not retained by Groq beyond the API call.</li>
+      <li><strong>OpenRouter</strong> — AI text generation for SOAP notes. Only anonymised transcript text is sent; no patient identifiers.</li>
+    </ul>
+
+    <h2>4. Data Retention</h2>
+    <p>Account data is retained for as long as your account is active. You may request deletion of your account and all associated data by emailing support@vitalnote.ai. Audio recordings are never stored beyond the duration of a single API call.</p>
+
+    <h2>5. Security</h2>
+    <p>All data in transit is encrypted using TLS. Firebase data is protected by Firestore Security Rules. We follow HIPAA-aligned minimum-data-retention principles — we store the least amount of information necessary to deliver the service.</p>
+
+    <h2>6. Children's Privacy</h2>
+    <p>VitalNoteAI is intended for licensed healthcare professionals aged 18 and above. We do not knowingly collect data from minors.</p>
+
+    <h2>7. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. The "Effective Date" at the top of this page will reflect the latest revision. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
+
+    <h2>8. Contact</h2>
+    <p>For privacy-related questions or data deletion requests, contact us at <a href="mailto:support@vitalnote.ai" style="color:var(--teal);">support@vitalnote.ai</a> or write to Agentry Inc., India.</p>
+  </div>
+</section>
+
+<!-- TERMS OF SERVICE -->
+<section class="legal-section" id="terms" style="background:var(--cream);">
+  <div class="legal-content reveal">
+    <div class="section-tag">Legal</div>
+    <h1 class="section-heading">Terms of Service</h1>
+    <span class="legal-effective">Effective Date: March 21, 2026</span>
+
+    <p>These Terms of Service ("Terms") govern your use of the VitalNoteAI mobile application and website operated by Agentry Inc. By downloading, installing, or using VitalNoteAI you agree to these Terms.</p>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By creating an account or using the App you confirm that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you do not agree, do not use the App.</p>
+
+    <h2>2. Eligibility</h2>
+    <p>VitalNoteAI is designed exclusively for licensed healthcare professionals (physicians, nurses, nurse practitioners, physician assistants, and other clinicians). By using the App you represent that you hold an appropriate clinical licence in your jurisdiction.</p>
+
+    <h2>3. Medical Disclaimer</h2>
+    <p>VitalNoteAI is a documentation tool, not a medical device. AI-generated SOAP notes are drafts only. They may contain errors, omissions, or clinically significant inaccuracies. You are solely responsible for reviewing, correcting, and approving every note before it is used in patient care, entered into an EHR, or shared with any third party. Do not use this App in emergency situations — call emergency services immediately.</p>
+
+    <h2>4. Subscription &amp; Payments</h2>
+    <p>The Free tier provides 10 SOAP notes per month at no charge. Pro subscriptions are billed monthly at $19/month (or equivalent) and processed via our website at agentryinc.com. Subscription payments are not collected inside the App. Refunds are handled on a case-by-case basis; contact support@vitalnote.ai within 7 days of a charge if you believe an error has occurred.</p>
+
+    <h2>5. Acceptable Use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Use the App to document fictitious patients or fabricate clinical records.</li>
+      <li>Attempt to reverse-engineer, decompile, or extract the App's AI prompts or model weights.</li>
+      <li>Transmit audio containing protected health information (PHI) of patients who have not consented to AI-assisted transcription.</li>
+      <li>Resell, sublicence, or redistribute the App or its outputs.</li>
+    </ul>
+
+    <h2>6. Data Handling &amp; HIPAA</h2>
+    <p>Agentry Inc. is not a HIPAA-covered entity and does not offer a Business Associate Agreement (BAA) at this time. You are responsible for ensuring your use of the App complies with applicable patient privacy laws in your jurisdiction, including obtaining appropriate patient consent before recording consultations.</p>
+
+    <h2>7. Intellectual Property</h2>
+    <p>All rights in the App, its design, and underlying technology are owned by Agentry Inc. SOAP notes generated by the App from your transcripts are yours to use in your clinical practice. You grant Agentry Inc. no rights to patient data.</p>
+
+    <h2>8. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, Agentry Inc. and its officers, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the App, including but not limited to clinical errors arising from AI-generated notes.</p>
+
+    <h2>9. Termination</h2>
+    <p>We reserve the right to suspend or terminate your account at any time for violation of these Terms. You may delete your account at any time by emailing support@vitalnote.ai.</p>
+
+    <h2>10. Governing Law</h2>
+    <p>These Terms are governed by the laws of India. Any disputes shall be resolved in the courts of Bengaluru, Karnataka.</p>
+
+    <h2>11. Changes to Terms</h2>
+    <p>We may update these Terms at any time. The "Effective Date" above reflects the latest revision. Continued use after changes constitutes your acceptance.</p>
+
+    <h2>12. Contact</h2>
+    <p>Questions about these Terms? Email <a href="mailto:support@vitalnote.ai" style="color:var(--teal);">support@vitalnote.ai</a>.</p>
+  </div>
+</section>
+
 <footer>
   <div class="footer-logo">Vital<span>Note</span>AI</div>
   <div class="footer-copy">© 2026 Agentry Inc. All rights reserved.</div>
   <div class="footer-links">
     <a href="mailto:hello@agentryinc.com">Contact</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
+    <a href="#privacy-policy">Privacy Policy</a>
+    <a href="#terms">Terms of Service</a>
   </div>
 </footer>
 
@@ -1376,6 +1681,28 @@
 
   // ─── FORM SUBMISSION → GOOGLE SHEET ──────────────────────────
   window.submitToSheet = async function() {
+    // ── Layer 1: Honeypot — bail silently if a bot filled the hidden field
+    if (document.getElementById('f-website').value) return;
+
+    // ── Layer 2: localStorage rate-limit — 60 s cooldown, max 3 per day
+    const COOLDOWN_MS = 60 * 1000;
+    const MAX_PER_DAY = 3;
+    const now = Date.now();
+    const lastSubmit  = parseInt(localStorage.getItem('vn_last_submit')  || '0', 10);
+    const dailyCount  = parseInt(localStorage.getItem('vn_daily_count')  || '0', 10);
+    const dailyReset  = parseInt(localStorage.getItem('vn_daily_reset')  || '0', 10);
+    const isNewDay    = now - dailyReset > 24 * 60 * 60 * 1000;
+    const effectiveCount = isNewDay ? 0 : dailyCount;
+
+    if (now - lastSubmit < COOLDOWN_MS) {
+      alert('Please wait a moment before submitting again.');
+      return;
+    }
+    if (effectiveCount >= MAX_PER_DAY) {
+      alert('You\'ve submitted the maximum number of responses for today. Thank you!');
+      return;
+    }
+
     const name      = document.getElementById('f-name').value.trim();
     const email     = document.getElementById('f-email').value.trim();
     const specialty = document.getElementById('f-specialty').value;
@@ -1411,8 +1738,12 @@
       utm_campaign:      params.get('utm_campaign') || '',
     });
 
-    // Always show success — no-cors means we can't read the response,
-    // but the fallback mailto catches any genuine failure
+    // ── Update rate-limit counters
+    localStorage.setItem('vn_last_submit', String(Date.now()));
+    localStorage.setItem('vn_daily_count', String(effectiveCount + 1));
+    if (isNewDay) localStorage.setItem('vn_daily_reset', String(Date.now()));
+
+    // Always show success — no-cors means we can't read the response
     document.getElementById('form-fields').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   };
@@ -1447,7 +1778,30 @@
   document.getElementById('f-email').addEventListener('input', function() {
     this.style.borderColor = '';
   });
+
+  // ─── LIGHTBOX ────────────────────────────────
+  document.querySelectorAll('.phone-frame img').forEach(function(img) {
+    img.addEventListener('click', function() {
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-img').alt = img.alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
 </script>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+</div>
 
 </body>
 </html>
