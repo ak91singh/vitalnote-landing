@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delete Your Account — VitalNoteAI</title>
+  <meta name="description" content="Request deletion of your VitalNoteAI account and all associated data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0f2a45;
+      --teal: #0d8a7c;
+      --teal-light: #13b09d;
+      --amber: #e8a030;
+      --cream: #f7f4ef;
+      --white: #ffffff;
+      --gray-50: #f9f9f7;
+      --gray-100: #ededea;
+      --gray-400: #9a9a94;
+      --gray-600: #5c5c57;
+      --gray-800: #2a2a26;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--gray-800);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(247,244,239,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-cta {
+      background: var(--teal);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--teal-light) !important; transform: translateY(-1px); }
+
+    /* ─── PAGE CONTENT ─── */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 140px 24px 100px;
+    }
+
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .page-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 36px;
+    }
+
+    .legal-effective {
+      display: inline-block;
+      margin-bottom: 32px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .page-wrap h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+      margin: 40px 0 10px;
+    }
+
+    .page-wrap p {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .page-wrap ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    .page-wrap ul li {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    .delete-box {
+      margin-top: 40px;
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px 36px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      border: 1.5px solid var(--gray-100);
+    }
+
+    .delete-box h2 {
+      margin-top: 0;
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.35rem;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .delete-box p {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .delete-box ul {
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+
+    .delete-box ul li {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    .btn-delete {
+      display: inline-block;
+      background: var(--navy);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(15,42,69,0.25);
+      margin-top: 8px;
+    }
+    .btn-delete:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,138,124,0.3); }
+
+    .warning-note {
+      margin-top: 20px;
+      background: #fff8ed;
+      border: 1px solid #f0c060;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #7a5a10;
+    }
+    .warning-note strong { display: block; margin-bottom: 4px; color: #c47d00; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--gray-800);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.2rem;
+      color: white;
+      text-decoration: none;
+    }
+    .footer-logo span { color: var(--teal-light); }
+    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      footer { flex-direction: column; align-items: flex-start; }
+      .delete-box { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">Vital<span>Note</span>AI</a>
+  <div class="nav-links">
+    <a href="/#how">How it works</a>
+    <a href="/#features">Features</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="/#feedback">Feedback</a>
+    <a href="/#privacy-policy">Privacy Policy</a>
+    <a href="/#feedback" class="nav-cta">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="page-wrap">
+  <div class="section-tag">Account Management</div>
+  <h1 class="page-heading">Delete Your Account</h1>
+  <span class="legal-effective">Agentry Inc · support@agentryinc.com</span>
+
+  <p>You have the right to delete your VitalNoteAI account and all associated data at any time. This page explains what gets deleted, what happens after deletion, and how to submit your request.</p>
+
+  <h2>What gets deleted</h2>
+  <ul>
+    <li>Your account credentials</li>
+    <li>All SOAP notes you have generated</li>
+    <li>Your profile information</li>
+  </ul>
+
+  <h2>What happens after deletion</h2>
+  <ul>
+    <li>Deletion is permanent and cannot be undone</li>
+    <li>Voice recordings are never stored, so there is nothing to delete there</li>
+    <li>Processing takes up to 7 days</li>
+  </ul>
+
+  <div class="delete-box">
+    <h2>How to request deletion</h2>
+    <p>Send an email to <strong>support@agentryinc.com</strong> with the following:</p>
+    <ul>
+      <li>Subject: <strong>"Account Deletion Request"</strong></li>
+      <li>Your registered email address</li>
+    </ul>
+    <a href="mailto:support@agentryinc.com?subject=Account%20Deletion%20Request" class="btn-delete">
+      Email Us to Delete My Account →
+    </a>
+    <div class="warning-note">
+      <strong>⚠ This action is irreversible</strong>
+      Once your account is deleted, all your data is permanently removed and cannot be recovered.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-logo">Vital<span>Note</span>AI</a>
+  <div class="footer-copy">© 2026 Agentry Inc. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="mailto:hello@agentryinc.com">Contact</a>
+    <a href="/#privacy-policy">Privacy Policy</a>
+    <a href="/#terms">Terms of Service</a>
+  </div>
+</footer>
+
+</body>
+</html>
