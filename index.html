@@ -1610,19 +1610,29 @@
       <li><strong>OpenRouter</strong> — AI text generation for SOAP notes. Only anonymised transcript text is sent; no patient identifiers.</li>
     </ul>
 
-    <h2>4. Data Retention</h2>
+    <h2>4. AI Processing &amp; Third-Party Services</h2>
+    <p>VitalNoteAI uses third-party artificial intelligence services to generate clinical SOAP notes from voice recordings. Specifically:</p>
+    <ul>
+      <li>Voice recordings submitted for transcription are processed by <strong>Groq Inc.</strong> (<a href="https://api.groq.com" style="color:var(--teal);">api.groq.com</a>) using their Whisper speech-to-text model.</li>
+      <li>Transcribed text is processed by AI language models via <strong>OpenRouter Inc.</strong> (<a href="https://openrouter.ai" style="color:var(--teal);">openrouter.ai</a>) or Groq Inc. for SOAP note generation.</li>
+    </ul>
+    <p>Voice recordings and transcripts are transmitted to these services solely for the purpose of generating the requested SOAP note. Agentry Inc. (the developer of VitalNoteAI) does not store voice recordings on its own servers after transcription is complete.</p>
+    <p>You are the <strong>Data Fiduciary</strong> for any patient data processed through this app. By using VitalNoteAI, you confirm that you have obtained appropriate patient consent for AI-assisted documentation in accordance with applicable law, including India's Digital Personal Data Protection Act (DPDP), 2023 where applicable.</p>
+    <p>AI-generated notes are provided as a documentation aid only and are not a substitute for clinical judgment. The doctor is solely responsible for reviewing, verifying, and signing any generated note before use.</p>
+
+    <h2>5. Data Retention</h2>
     <p>Account data is retained for as long as your account is active. You may request deletion of your account and all associated data by emailing agentryinc@gmail.com. Audio recordings are never stored beyond the duration of a single API call.</p>
 
-    <h2>5. Security</h2>
+    <h2>6. Security</h2>
     <p>All data in transit is encrypted using TLS. Firebase data is protected by Firestore Security Rules. We follow HIPAA-aligned minimum-data-retention principles — we store the least amount of information necessary to deliver the service.</p>
 
-    <h2>6. Children's Privacy</h2>
+    <h2>7. Children's Privacy</h2>
     <p>VitalNoteAI is intended for licensed healthcare professionals aged 18 and above. We do not knowingly collect data from minors.</p>
 
-    <h2>7. Changes to This Policy</h2>
+    <h2>8. Changes to This Policy</h2>
     <p>We may update this Privacy Policy from time to time. The "Effective Date" at the top of this page will reflect the latest revision. Continued use of the App after changes constitutes acceptance of the revised policy.</p>
 
-    <h2>8. Contact</h2>
+    <h2>9. Contact</h2>
     <p>For privacy-related questions or data deletion requests, contact us at <a href="mailto:agentryinc@gmail.com" style="color:var(--teal);">agentryinc@gmail.com</a> or write to Agentry Inc., India.</p>
   </div>
 </section>
