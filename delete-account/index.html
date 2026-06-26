@@ -234,9 +234,25 @@
       footer { flex-direction: column; align-items: flex-start; }
       .delete-box { padding: 24px 20px; }
     }
+
+    /* ─── CURSOR-REACTIVE BACKGROUND ─── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Lift content above the canvas layer */
+    nav        { z-index: 100; }
+    .page-wrap { position: relative; z-index: 1; }
+    footer     { position: relative; z-index: 1; }
   </style>
 </head>
 <body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- NAV -->
 <nav>
@@ -300,6 +316,10 @@
     <a href="/#terms">Terms of Service</a>
   </div>
 </footer>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="../bg.js"></script>
 
 </body>
 </html>
