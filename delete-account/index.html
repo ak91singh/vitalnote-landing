@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Delete Your Account — VitalNoteAI</title>
+  <title>Delete Your Account — VitalNoteAI · Agentry Global</title>
   <meta name="description" content="Request deletion of your VitalNoteAI account and all associated data. Email agentryinc@gmail.com." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,17 +12,17 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy: #0f2a45;
-      --teal: #0d8a7c;
-      --teal-light: #13b09d;
-      --amber: #e8a030;
-      --cream: #f7f4ef;
-      --white: #ffffff;
-      --gray-50: #f9f9f7;
-      --gray-100: #ededea;
-      --gray-400: #9a9a94;
-      --gray-600: #5c5c57;
-      --gray-800: #2a2a26;
+      --navy:       #0e1b2e;
+      --teal:       #0096b8;
+      --teal-light: #00ccee;
+      --amber:      #e8a030;
+      --cream:      #edf2f7;
+      --white:      #ffffff;
+      --gray-50:    #f5f9fb;
+      --gray-100:   #e4ecf2;
+      --gray-400:   #8899aa;
+      --gray-600:   #4a5a6e;
+      --gray-800:   #18293d;
     }
 
     html { scroll-behavior: smooth; }
@@ -43,18 +43,24 @@
       align-items: center;
       justify-content: space-between;
       padding: 18px 48px;
-      background: rgba(247,244,239,0.88);
+      background: rgba(237, 242, 247, 0.90);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
+
     .nav-logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.5rem;
-      color: var(--navy);
-      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
       text-decoration: none;
+      flex-shrink: 0;
     }
-    .nav-logo span { color: var(--teal); }
+    .nav-logo-img {
+      height: 40px;
+      width: auto;
+      border-radius: 6px;
+    }
+
     .nav-links { display: flex; gap: 36px; align-items: center; }
     .nav-links a {
       text-decoration: none;
@@ -141,7 +147,7 @@
       background: var(--white);
       border-radius: 16px;
       padding: 32px 36px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
       border: 1.5px solid var(--gray-100);
     }
 
@@ -182,10 +188,14 @@
       font-weight: 600;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(15,42,69,0.25);
+      box-shadow: 0 4px 20px rgba(14, 27, 46, 0.25);
       margin-top: 8px;
     }
-    .btn-delete:hover { background: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,138,124,0.3); }
+    .btn-delete:hover {
+      background: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 150, 184, 0.30);
+    }
 
     .warning-note {
       margin-top: 20px;
@@ -201,29 +211,36 @@
     /* ─── FOOTER ─── */
     footer {
       background: var(--gray-800);
-      padding: 40px 48px;
+      padding: 36px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
     }
+
     .footer-logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.2rem;
-      color: white;
+      display: flex;
+      align-items: center;
       text-decoration: none;
+      flex-shrink: 0;
     }
-    .footer-logo span { color: var(--teal-light); }
-    .footer-copy { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
-    .footer-links { display: flex; gap: 24px; }
+    .footer-logo-img {
+      height: 48px;
+      width: auto;
+      border-radius: 7px;
+    }
+
+    .footer-copy { font-size: 0.8rem; color: rgba(255, 255, 255, 0.30); }
+
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
     .footer-links a {
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255, 255, 255, 0.40);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-links a:hover { color: rgba(255, 255, 255, 0.70); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
@@ -231,7 +248,7 @@
       .nav-links { display: none; }
     }
     @media (max-width: 600px) {
-      footer { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
       .delete-box { padding: 24px 20px; }
     }
 
@@ -244,7 +261,6 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Lift content above the canvas layer */
     nav        { z-index: 100; }
     .page-wrap { position: relative; z-index: 1; }
     footer     { position: relative; z-index: 1; }
@@ -256,14 +272,13 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">Vital<span>Note</span>AI</a>
+  <a href="/" class="nav-logo">
+    <img src="/AgentryGlobalLogo.jpg" alt="Agentry Global" class="nav-logo-img">
+  </a>
   <div class="nav-links">
-    <a href="/#how">How it works</a>
-    <a href="/#features">Features</a>
-    <a href="/#pricing">Pricing</a>
-    <a href="/#feedback">Feedback</a>
+    <a href="/#products">Products</a>
     <a href="/#privacy-policy">Privacy Policy</a>
-    <a href="/#feedback" class="nav-cta">Join Waitlist</a>
+    <a href="/#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
 
@@ -271,7 +286,7 @@
 <div class="page-wrap">
   <div class="section-tag">Account Management</div>
   <h1 class="page-heading">Delete Your Account</h1>
-  <span class="legal-effective">Agentry Inc · agentryinc@gmail.com</span>
+  <span class="legal-effective">Agentry Global · agentryinc@gmail.com</span>
 
   <p>You have the right to delete your VitalNoteAI account and all associated data at any time. This page explains what gets deleted, what happens after deletion, and how to submit your request.</p>
 
@@ -308,15 +323,16 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="/" class="footer-logo">Vital<span>Note</span>AI</a>
-  <div class="footer-copy">© 2026 Agentry Inc. All rights reserved.</div>
+  <a href="/" class="footer-logo">
+    <img src="/AgentryGlobalLogo.jpg" alt="Agentry Global" class="footer-logo-img">
+  </a>
+  <div class="footer-copy">© 2026 Agentry Global (OPC) Private Limited. All rights reserved.</div>
   <div class="footer-links">
-    <a href="mailto:hello@agentryinc.com">Contact</a>
+    <a href="mailto:agentryinc@gmail.com">Contact</a>
     <a href="/#privacy-policy">Privacy Policy</a>
     <a href="/#terms">Terms of Service</a>
   </div>
 </footer>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 <script src="../bg.js"></script>

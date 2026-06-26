@@ -41,9 +41,9 @@
   const pPos = new Float32Array(N * 3);
   const pCol = new Float32Array(N * 3);
   const palette = [
-    new THREE.Color('#0d8a7c'),  // teal
-    new THREE.Color('#7C6FE0'),  // violet
-    new THREE.Color('#1A5490'),  // blue
+    new THREE.Color('#00ccee'),  // electric cyan
+    new THREE.Color('#1d6fc4'),  // steel blue
+    new THREE.Color('#0096b8'),  // mid cyan
   ];
   for (let i = 0; i < N; i++) {
     pPos[i * 3]     = (Math.random() - 0.5) * 24;

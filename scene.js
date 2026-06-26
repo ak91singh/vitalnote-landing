@@ -40,10 +40,10 @@
   const pPos = new Float32Array(N * 3);
   const pCol = new Float32Array(N * 3);
   const palette = [
-    new THREE.Color('#0d8a7c'),
-    new THREE.Color('#7C6FE0'),
-    new THREE.Color('#1A5490'),
-    new THREE.Color('#13b09d'),
+    new THREE.Color('#00ccee'),
+    new THREE.Color('#0096b8'),
+    new THREE.Color('#00e4ff'),
+    new THREE.Color('#1d6fc4'),
   ];
   for (let i = 0; i < N; i++) {
     pPos[i * 3]     = (Math.random() - 0.5) * 18;
@@ -64,14 +64,14 @@
   // Wireframe icosahedron — central
   const ico = new THREE.Mesh(
     new THREE.IcosahedronGeometry(2.4, 1),
-    new THREE.MeshBasicMaterial({ color: 0x0d8a7c, wireframe: true, transparent: true, opacity: 0.09 })
+    new THREE.MeshBasicMaterial({ color: 0x00c0d8, wireframe: true, transparent: true, opacity: 0.09 })
   );
   group.add(ico);
 
   // Wireframe torus — offset for depth
   const tor = new THREE.Mesh(
     new THREE.TorusGeometry(1.4, 0.45, 8, 28),
-    new THREE.MeshBasicMaterial({ color: 0x7C6FE0, wireframe: true, transparent: true, opacity: 0.07 })
+    new THREE.MeshBasicMaterial({ color: 0x1d6fc4, wireframe: true, transparent: true, opacity: 0.07 })
   );
   tor.position.set(3.5, -1.5, -3);
   group.add(tor);
