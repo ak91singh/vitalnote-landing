@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agentry-root",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", ".", "-l", "3000"],
+      "port": 3000
+    },
+    {
+      "name": "sniper",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "sniper", "-l", "3001"],
+      "port": 3001
+    }
+  ]
+}
